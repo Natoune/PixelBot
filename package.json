@@ -1,0 +1,19 @@
+{
+  "name": "PIXELBOT",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "test": "env-cmd -f ./env/.env.dev nodemon index.js",
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "discord.js": "^12.5.3",
+    "discord.js-leveling": "^5.4.0",
+    "fs": "^0.0.1-security",
+    "nodemon": "^2.0.9"
+  },
+  "devDependencies": {
+    "env-cmd": "^10.1.0"
+  }
+}
