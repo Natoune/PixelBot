@@ -1,0 +1,38 @@
+<%- include('./helpers/header'); %>
+<link rel="stylesheet" href="/public/css/server-selection.css">
+<%- include('./helpers/headerc'); %>
+    <section class="hero has-text-white is-fullheight-with-navbar">
+        <div class="hero-body">
+            <div class="container">
+                <% if (user) { %>
+                <h1 class="title home-title has-text-white">Sélectionnez un serveur</h1>
+
+                <%
+                for (var i = 0; i < modules.userGuilds.length; i++) {
+                %>
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="content">
+                                <% if (modules.userGuilds[i].icon) { %>
+                                <img class="guild-icon" src="https://cdn.discordapp.com/icons/<%=modules.userGuilds[i].id%>/<%=modules.userGuilds[i].icon%>">
+                                <% } else { %>
+                                <img class="guild-icon" src="https://cdn.discordapp.com/embed/avatars/<%=Math.floor(Math.random() * (6 - 0))%>.png">
+                                <% } %>
+                                <h3><%= modules.userGuilds[i].name %></h3>
+                                <%
+                                if (modules.userGuildsExists[i]) { %> 
+                                    <a class="button is-link" href="/dashboard/<%=modules.userGuilds[i].id%>">Configurer</a>
+                                <% } else { %>
+                                    <a class="button is-dark" onclick="javascript:window.open(this.href,'Ajouter PixelBot', 'height=770, width=500, location=no, resizable=yes, scrollbars=no');return false;" href="https://discord.com/oauth2/authorize?client_id=860842611970932767&scope=bot%20applications.commands&permissions=1945627743&guild_id=<%=modules.userGuilds[i].id%>">Ajouter</a>
+                                <% } %>
+                            </div>
+                        </div>
+                    </div>
+                <% } %>
+                <% } else { %>
+                <meta http-equiv="refresh" content="0;URL=/login"> 
+                <% } %>
+            </div>
+        </div>
+    </section>
+<%- include('./helpers/footer'); %>

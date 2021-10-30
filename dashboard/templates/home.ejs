@@ -1,0 +1,92 @@
+<%- include('./helpers/header'); %>
+<link rel="stylesheet" href="/public/css/home.css">
+<%- include('./helpers/headerc'); %>
+    <section class="hero has-text-white is-fullheight-with-navbar">
+        <div class="hero-body">
+            <div class="container">
+                <div class="title-box">
+                    <h1 class="title home-title has-text-white"><%= bot.user.username %></h1>
+                    <h4 class="subtitle has-text-grey-light">PixelBot est un Bot Discord utilitaire 100% Français et Gratuit.</h4>
+                    <a class="button is-link" onclick="javascript:window.open(this.href,'Ajouter PixelBot', 'height=770, width=500, location=no, resizable=yes, scrollbars=no');return false;" href="https://discord.com/oauth2/authorize?client_id=860842611970932767&scope=bot%20applications.commands&permissions=1945627743">Ajouter le Bot</a>
+                    <a href="#modules" class="button is-dark">Fonctionnalités</a>
+                </div>
+
+                <nav class="level is-mobile">
+                    <div class="level-item has-text-centered">
+                        <div>
+                        <p class="heading">Serveurs</p>
+                        <p class="title"><%= stats.guilds %></p>
+                        </div>
+                    </div>
+                    <div class="level-item has-text-centered">
+                        <div>
+                        <p class="heading">Membres</p>
+                        <p class="title"><%= stats.members %></p>
+                        </div>
+                    </div>
+                    <div class="level-item has-text-centered">
+                        <div>
+                        <p class="heading">Salons</p>
+                        <p class="title"><%= stats.channels %></p>
+                        </div>
+                    </div>
+                </nav>
+
+                <div class="hr">
+                    <p>Déjà utilisé par <%= bot.guilds.cache.size %> serveurs ! <a class="button is-link" onclick="javascript:window.open(this.href,'Ajouter PixelBot', 'height=770, width=500, location=no, resizable=yes, scrollbars=no');return false;" href="https://discord.com/oauth2/authorize?client_id=860842611970932767&scope=bot%20applications.commands&permissions=1945627743">Ajouter le Bot</a></p>
+                </div>
+
+                <div id="modules">
+                    <h2 class="modules-title title has-text-white">Fonctionnalités</h2>
+                    <div class="columns is-multiline is-mobile">
+                        <!-- Moderation -->
+                        <div class="column is-half">
+                            <h2 class="title has-text-grey-light">Modération</h2>
+                            <h4 class="subtitle has-text-grey-light">Fais régner la paix sur ton Serveur grâce à de puissant outils pour tes modérateurs !</h4>
+                        </div>
+                        <div style="margin-bottom:15%;" class="column is-half">
+                            <img src="public/images/moderation.svg" style="margin-top:-7%">
+                        </div>
+                        <!-- Niveaux -->
+                        <div class="column is-half">
+                            <img src="public/images/levels.svg" style="margin-top:-10%">
+                        </div>
+                        <div style="margin-bottom:30%" class="column is-half">
+                            <h2 class="title has-text-grey-light">Niveaux</h2>
+                            <h4 class="subtitle has-text-grey-light">Récompense tes membres actifs avec un système de Niveaux et donne des rôles automatiquement aux personnes atteignant un certain Niveau.</h4>
+                        </div>
+                        <!-- AUTRE -->
+                        <div class="column is-half">
+                            <h2 class="title has-text-grey-light">Musique</h2>
+                            <h4 class="subtitle has-text-grey-light">Écoute de la musique tranquillement dans tes salons Vocaux&#8230;</h4>
+                        </div>
+                        <div class="column is-half">
+                            <img src="public/images/music.svg" style="margin-top:-17%">
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function responsive(x) {
+            if (x.matches) { // If media query matches
+                var column = document.getElementsByClassName('column');
+                for (var i = 0; i < column.length; i++) {
+                    column[i].setAttribute("class", "column is-full")
+                }
+            } else {
+                var column = document.getElementsByClassName('column');
+                for (var i = 0; i < column.length; i++) {
+                    column[i].setAttribute("class", "column is-half")
+                }
+            }
+        }
+
+        var x = window.matchMedia("(max-width: 700px)")
+        responsive(x)
+        x.addListener(responsive)
+    </script>
+<%- include('./helpers/footer'); %>

@@ -1,0 +1,30 @@
+.home-title {
+    font-size: 300% !important;
+    padding-bottom: 10px;
+    text-align: center;
+}
+
+.card {
+    background: #1f2129;
+    margin-top: 1%;
+}
+
+.card h3 {
+    display: inline-block;
+    color: #fff !important;
+    vertical-align: baseline;
+    margin: auto 1% 1%;
+    font-size: 120%;
+}
+
+.card a {
+    display: inline-block;
+    vertical-align: baseline;
+}
+
+.guild-icon {
+    display: inline-block;
+    width: 45px;
+    vertical-align: middle;
+    border-radius: 50%;
+}

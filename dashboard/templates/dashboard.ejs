@@ -1,0 +1,53 @@
+<%- include('./helpers/header'); %>
+<link rel="stylesheet" href="/public/css/dashboard.css">
+<%- include('./helpers/headerc'); %>
+    <section class="hero has-text-white is-fullheight-with-navbar">
+        <div class="hero-body">
+            <div class="container">
+                <%
+                if (user) {
+                    var guild_exists = false;
+                    var guild = 0;
+                    for (var i = 0; i < user.guilds.length; i++) {
+                        if (user.guilds[i].id == params.guildId) {
+                            guild_exists = true;
+                            guild = user.guilds[i];
+                        }
+                    }
+
+                    if (guild_exists) {
+                        if (guild.permissions == "2147483647") {
+                            %>
+                            <h1 class="title home-title has-text-white"><%= guild.name %></h1>
+
+                            <div class="columns">
+                                <div class="column is-dark is-one-third">
+                                    <h3>Modération</h3>
+                                    <p class="has-text-grey-light">Divers outils de modération comme des commandes de Ban/Kick/Mute et d'autres encore</p>
+                                    <button onclick='window.location.href="/dashboard/<%= params.guildId %>/moderation/active/<%= !modules.modules.moderation %>"' id="moderation-btn" class="check active-<%= modules.modules.moderation %>"></button>
+                                </div>
+                                <div class="column is-dark">
+                                    <h3>Niveaux</h3>
+                                    <p class="has-text-grey-light">Un système avancé de niveaux pour donner un aspect de compétition sur ton serveur !</p>
+                                    <button onclick='window.location.href="/dashboard/<%= params.guildId %>/experience/active/<%= !modules.modules.experience %>"' id="experience-btn" class="check active-<%= modules.modules.experience %>"></button>
+                                </div>
+                                <div class="column is-dark is-one-third">
+                                    <h3>Musique</h3>
+                                    <p class="has-text-grey-light">Écoute de la musique tranquillement dans tes salons Vocaux…</p>
+                                    <button onclick='window.location.href="/dashboard/<%= params.guildId %>/music/active/<%= !modules.modules.music %>"' id="miscellanous-btn" class="check active-<%= modules.modules.music %>"></button>
+                                </div>
+                            </div>
+                            <%
+                        } else {
+                            %><meta http-equiv="refresh" content="0;URL=/dashboard"><%
+                        }
+                    } else {
+                        %><meta http-equiv="refresh" content="0;URL=/dashboard"><%
+                    }
+                } else {
+                    %><meta http-equiv="refresh" content="0;URL=/login">
+                <% } %>
+            </div>
+        </div>
+    </section>
+<%- include('./helpers/footer'); %>

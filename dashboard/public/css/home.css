@@ -1,0 +1,94 @@
+.home-title {
+    font-size: 340% !important;
+    padding-bottom: 10px;
+}
+
+.navbar-menu {
+    background: #363636;
+}
+
+.navbar-start a {
+    color: #fff !important;
+}
+
+.navbar-start a:hover {
+    background: #292929 !important;   
+}
+
+.title-box {
+    margin-top: 12%;
+    margin-bottom: 5%;
+}
+
+.level {
+    width: 40%;
+    margin-bottom: 13% !important;
+}
+
+.level p.title, .level p.heading {
+    color: #b5b5b5;
+}
+
+.hr {
+    background-color: #222;
+    padding: 30px;
+    width: 120%;
+    margin-left: -10%;
+    font-size: 150%;
+    margin-bottom: 5%;
+}
+
+.hr p {
+    margin-left: 20%;
+    font-size: 110%;
+}
+
+.hr a {
+    display: inline-block;
+    width: 22%;
+    margin-left: 20%;
+}
+
+#modules {
+    padding-top: 3%;
+}
+
+.modules-title {
+    width: max-content;
+    font-size: 260%;
+    text-align: center;
+    margin: auto;
+    padding-bottom: 8%;
+}
+
+.modules-title:after {
+    content: '';
+    position: relative;
+    display: block;
+    left: 0;
+    top: 8px;
+    width: 0;
+    height: 2px;
+    background: #fff;
+    transition: width 500ms ease;
+}
+
+.modules-title:hover:after {
+    width: 100%;
+}
+
+@media screen and (max-width: 1000px) {
+    .level {
+        width: 60%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .hr a {
+        width: 52%;
+    }
+
+    .level {
+        width: 100%;
+    }
+}

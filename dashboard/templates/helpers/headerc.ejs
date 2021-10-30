@@ -1,0 +1,73 @@
+</head>
+<body>
+    <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="/">
+            <img src="/public/images/logo-full.svg" width="112" height="28">
+            </a>
+
+            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarHome">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            </a>
+        </div>
+
+        <div id="navbarHome" class="navbar-menu">
+            <div class="navbar-start">
+                <a class="navbar-item" href="/">
+                    Accueil
+                </a>
+                <a class="navbar-item" href="/commands">
+                    Commandes
+                </a>
+                <a class="navbar-item" href="https://discord.gg/VXuTXSDu9V" target="_blank">
+                    Serveur de Support
+                </a>
+                <p class="navbar-item has-text-info">
+                    Déjà sur <%= bot.guilds.cache.size %> serveurs !
+                </p>
+            </div>
+
+            <div class="navbar-end">
+            <div class="navbar-item">
+                <div class="buttons">
+                <a class="button is-light" onclick="javascript:window.open(this.href,'Ajouter PixelBot', 'height=770, width=500, location=no, resizable=yes, scrollbars=no');return false;" href="https://discord.com/oauth2/authorize?client_id=860842611970932767&scope=bot%20applications.commands&permissions=1945627743">
+                    Ajouter le Bot
+                </a>
+                <% if(user) { %>
+                <div class="dropdown is-hoverable is-right">
+                    <div class="dropdown-trigger">
+                        <button class="button is-link" aria-haspopup="true" aria-controls="dropdown-menu3">
+                            <% if (user.avatar) { %>
+                            <img style="border-radius:50%" src="https://cdn.discordapp.com/avatars/<%= user.id %>/<%= user.avatar %>">
+                            <% } else { %>
+                            <img style="border-radius:50%" src="https://cdn.discordapp.com/embed/avatars/0.png">
+                            <% } %>
+                            <strong style="margin-left:10px"><%= user.username %></strong>
+                            <span class="icon is-small">
+                                <i class="fas fa-angle-down" aria-hidden="true"></i>
+                            </span>
+                        </button>
+                    </div>
+                    <div class="dropdown-menu" id="dropdown-menu3" role="menu">
+                        <div class="dropdown-content">
+                        <a href="/dashboard" class="dropdown-item">
+                            Tableau de Bord
+                        </a>
+                        <a href="/logout" class="dropdown-item has-text-danger">
+                            Déconnexion
+                        </a>
+                        </div>
+                    </div>
+                </div>
+                <% } else { %>
+                <a class="button is-link" href="/login">
+                    <strong>Se Connecter</strong>
+                </a>
+                <% } %>
+                </div>
+            </div>
+            </div>
+        </div>
+    </nav>
