@@ -1,9 +1,7 @@
 /env
 /node_modules
-/dash
-/PixelBot-Dashboard
 /logs
-ffmpeg.exe
+*.exe
 
 ########################
 ### VisualStudioCode ###
@@ -16,7 +14,7 @@ ffmpeg.exe
 .history/
 .history
 .ionide
-frontmatter.js
+frontmatter.json
 
 ### Windows ###
 Thumbs.db
