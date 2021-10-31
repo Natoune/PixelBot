@@ -3,6 +3,7 @@
 /logs
 *.exe
 application.yml
+firebase-debug.log
 
 ########################
 ### VisualStudioCode ###
