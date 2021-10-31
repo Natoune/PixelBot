@@ -149,7 +149,7 @@ module.exports = client => {
         });
     });
 
-    const port = process.env.DASHBOARD_PORT;
+    const port = parseInt(process.env.DASHBOARD_PORT);
     client.site = dashboard.listen(port);
     console.log(`Serveur web démarré sur le port ${port}`);
 };

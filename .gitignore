@@ -4,6 +4,7 @@
 *.exe
 application.yml
 firebase-debug.log
+package-lock.json
 
 ########################
 ### VisualStudioCode ###

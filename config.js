@@ -1,6 +1,6 @@
 module.exports = {
     LAVALINK_HOST: 'localhost',
-    LAVALINK_PORT: process.env.LAVALINK_PORT,
+    LAVALINK_PORT: parseInt(process.env.LAVALINK_PORT),
     LAVALINK_PASSWORD: process.env.LAVALINK_PASSWORD,
     DBCONNECTION: process.env.DBCONNECTION,
     DEFAULTSETTINGS: {
