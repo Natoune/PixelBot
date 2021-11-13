@@ -10,7 +10,7 @@ module.exports.run = (client, message, args, settings, dbUser, dbModules) => {
         .addField('Commandes PixelBot', `Liste des commandes disponibles\nPour plus d'informations sur une commande, tapez \`${settings.prefix}help [Commande]\``)
     
         for (const category of categoryList) {
-            if (dbModules[category.toLowerCase()] === true) embed.addField(
+            if (dbModules[category.toLowerCase()] !== false) embed.addField(
                 `${category}:`,
                 `_ _${client.commands.filter(cat => cat.help.category === category.toLowerCase()).map(cmd => "\`"+settings.prefix+cmd.help.usage+"\`\n"+cmd.help.description).join('\n')}`
             );
