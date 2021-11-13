@@ -3,17 +3,17 @@ const { MessageEmbed } = require('discord.js');
 const { readdirSync } = require('fs');
 const categoryList = readdirSync('./commands');
 
-module.exports.run = (client, message, args, settings) => {
+module.exports.run = (client, message, args, settings, dbUser, dbModules) => {
     if (!message.member.permissions.has('BAN_MEMBERS')) categoryList.shift();
     if (!args.length) {
         const embed = new MessageEmbed()
         .addField('Commandes PixelBot', `Liste des commandes disponibles\nPour plus d'informations sur une commande, tapez \`${settings.prefix}help [Commande]\``)
     
         for (const category of categoryList) {
-            embed.addField(
+            if (dbModules[category.toLowerCase()] === true) embed.addField(
                 `${category}:`,
                 `_ _${client.commands.filter(cat => cat.help.category === category.toLowerCase()).map(cmd => "\`"+settings.prefix+cmd.help.usage+"\`\n"+cmd.help.description).join('\n')}`
-            )
+            );
         }
 
         message.channel.send({

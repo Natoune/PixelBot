@@ -12,12 +12,22 @@ module.exports = async (client, message) => {
         dbModules = await client.getModules(message.guild);
         dbUser = await client.getUser(message.member);
 
-        if (!dbUser) await client.createUser({
-            guildID: message.member.guild.id,
-            guildName: message.member.guild.name,
-            userID: message.member.id,
-            username: message.member.user.tag
-        });
+        if (!dbUser) {
+            await client.createUser({
+                guildID: message.member.guild.id,
+                guildName: message.member.guild.name,
+                userID: message.member.id,
+                username: message.member.user.tag
+            });
+        }
+
+        if (!settings) {
+            await client.createGuild({
+                guildID: message.guild.id,
+                guildName: message.guild.name
+            });
+        }
+            
 
         if (message.author.bot) return;
 
@@ -68,5 +78,5 @@ module.exports = async (client, message) => {
     /* Permissions ADMIN */
     if (command.help.permissions !== false && !message.member.permissions.has(command.help.permissions)) return message.reply("Vous n'avez pas la permission d'exécuter cette commande !");
 
-    command.run(client, message, args, settings, dbUser);
+    command.run(client, message, args, settings, dbUser, dbModules);
 }

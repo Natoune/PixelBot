@@ -10,7 +10,7 @@ const MESSAGES = {
                 permissions: 'BAN_MEMBERS',
                 description: 'ᴄ̲̮̾͡ᴏ̴͖ͤ͆ᴍ̡̗̫̤̐ᴍ̸̛͉̱ͧᴀ̠͔̿͘̕ɴ̢̩͈ͤͨ͜ᴅ̹ͧ̌͢͠ᴇ̧̛̜̾ͅ ̣ͧ͢s̡̤͋͐͠ᴇ̸̺ͯͬ̐ᴄ͓͗́͡ʀ̴̜ͥ̾̑ę̫̜̀ͪͣ͢ᴛ̴̠̐͂ͬ͟ᴇ̫ͯ̓̕͠',
                 usage: 'eval <code>',
-                usage_details: '<code> (requis): Code à tester'
+                usage_details: '<code>: ̣ͧ͢s̡̤͋͐͠ᴇ̸̺ͯͬ̐ᴄ͓͗́͡ʀ̴̜ͥ̾̑ę̫̜̀ͪͣ͢ᴛ̴̠̐͂ͬ͟'
             },
             CONFIG: {
                 name: 'config',
@@ -30,7 +30,7 @@ const MESSAGES = {
                 args: true,
                 guild_only: true,
                 permissions: 'BAN_MEMBERS',
-                description: 'Renvoie votre un message',
+                description: 'Renvoie votre message',
                 usage: 'say <message>',
                 usage_details: '<message> (requis): Message a envoyer'
             }
@@ -43,7 +43,7 @@ const MESSAGES = {
                 args: true,
                 guild_only: true,
                 permissions: 'BAN_MEMBERS',
-                description: 'Ajouter des points à un joueur',
+                description: 'Ajouter des points à un utilisateur',
                 usage: 'add-xp [Utilisateur] <Points>',
                 usage_details: '[Utilisateur]: Utilisateur cible (laisser vide pour vous rajouter des points vous-même)\n<Points> (requis): Nombre de points à rajouter'
             },
@@ -54,7 +54,7 @@ const MESSAGES = {
                 args: false,
                 guild_only: true,
                 permissions: false,
-                description: 'Renvoie le niveau d\'un joueur',
+                description: 'Renvoie le niveau d\'un utilisateur',
                 usage: 'level [Utilisateur]',
                 usage_details: '[Utilisateur]: Utilisateur cible (laisser vide pour voir vos points)'
             },
@@ -65,7 +65,7 @@ const MESSAGES = {
                 args: true,
                 guild_only: true,
                 permissions: 'BAN_MEMBERS',
-                description: 'Ajouter des points à un joueur',
+                description: 'Ajouter des points à un utilisateur',
                 usage: 'remove-xp [Utilisateur] <Points>',
                 usage_details: '[Utilisateur]: Utilisateur cible (laisser vide pour vous retirer des points vous-même)\n<Points> (requis): Nombre de points à retirer'
             }
@@ -79,7 +79,7 @@ const MESSAGES = {
                 guild_only: false,
                 permissions: false,
                 description: 'Affiche l\'aide sur les commandes',
-                usage: 'ping [Commande]',
+                usage: 'help [Commande]',
                 usage_details: '[Commande]: Commande à afficher'
             },
             PING: {
@@ -101,8 +101,76 @@ const MESSAGES = {
                 guild_only: true,
                 permissions: false,
                 description: 'Donne des informations sur un utilisateur',
-                usage: 'userinfo [Utilisateur]',
-                usage_details: '[Utilisateur]: Utilisateur cible (laisser vide pour voir vos propres informations)'
+                usage: 'userinfo <Utilisateur>',
+                usage_details: '<Utilisateur> (requis): Utilisateur cible (laisser vide pour voir vos propres informations)'
+            }
+        },
+        MODERATION: {
+            BAN: {
+                name: 'ban',
+                aliases: [],
+                category: 'moderation',
+                args: true,
+                guild_only: true,
+                permissions: 'BAN_MEMBERS',
+                description: 'Banni un membre du serveur',
+                usage: 'ban <Utilisateur> [Raison]',
+                usage_details: '<Utilisateur> (requis): Utilisateur cible\n[Raison]: Raison du ban'
+            },
+            CLEAR: {
+                name: 'clear',
+                aliases: ['clean', 'purge'],
+                category: 'moderation',
+                args: true,
+                guild_only: true,
+                permissions: 'MANAGE_MESSAGES',
+                description: 'Supprimer un grand nombre de messages',
+                usage: 'clear <Nombre> [Utilisateur]',
+                usage_details: '<Nombre> (requis): Nombre de messages à supprimer (1-100)\n[Utilisateur]: Utilisateur cible'
+            },
+            KICK: {
+                name: 'kick',
+                aliases: [],
+                category: 'moderation',
+                args: true,
+                guild_only: true,
+                permissions: 'KICK_MEMBERS',
+                description: 'Expulse un membre du serveur',
+                usage: 'kick <Utilisateur> [Raison]',
+                usage_details: '<Utilisateur> (requis): Utilisateur cible\n[Raison]: Raison du kick'
+            },
+            MUTE: {
+                name: 'mute',
+                aliases: [],
+                category: 'moderation',
+                args: true,
+                guild_only: true,
+                permissions: 'MANAGE_MESSAGES',
+                description: 'Rendre muet un membre du serveur',
+                usage: 'mute <Utilisateur>',
+                usage_details: '<Utilisateur> (requis): Utilisateur cible'
+            },
+            UNBAN: {
+                name: 'unban',
+                aliases: [],
+                category: 'moderation',
+                args: true,
+                guild_only: true,
+                permissions: 'BAN_MEMBERS',
+                description: 'Débannir un membre du serveur',
+                usage: 'unban <ID Utilisateur>',
+                usage_details: '<ID Utilisateur> (requis): ID de l\'utilisateur cible (Clique droit, copier l\'identifiant)'
+            },
+            UNMUTE: {
+                name: 'unmute',
+                aliases: [],
+                category: 'moderation',
+                args: true,
+                guild_only: true,
+                permissions: 'MANAGE_MESSAGES',
+                description: 'Redonne la permission à un membre muet de parler',
+                usage: 'unmute <Utilisateur>',
+                usage_details: '<Utilisateur> (requis): Utilisateur cible'
             }
         },
         MUSIC: {

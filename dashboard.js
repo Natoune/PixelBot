@@ -21,9 +21,9 @@ module.exports = client => {
 
     passport.use(
         new Strategy({
-            clientID: "860842611970932767",
-            clientSecret: "b1mL9ITKJH6qgocmVG9_BFVQa0mt54TJ",
-            callbackUrl: "http://localhot:3030/callback",
+            clientID: process.env.CLIENT_ID,
+            clientSecret: process.env.CLIENT_SECRET,
+            callbackUrl: "http://localhost:3030/callback",
             scope: ["identify", "guilds"]
         },
         (accessToken, refreshToken, profile, done) => {
@@ -96,6 +96,7 @@ module.exports = client => {
         if (moduleName == 'moderation') await client.updateModulesFromId(guildId, { moderation: newState });
         if (moduleName == 'experience') await client.updateModulesFromId(guildId, { experience: newState });
         if (moduleName == 'misc') await client.updateModulesFromId(guildId, { misc: newState });
+        if (moduleName == 'music') await client.updateModulesFromId(guildId, { music: newState });
         res.redirect(`/dashboard/${guildId}`);
     });
 
@@ -149,7 +150,24 @@ module.exports = client => {
         });
     });
 
-    const port = parseInt(process.env.PORT);
+    /* ERREUR 404 */
+    dashboard.use(function(req, res){
+        res.status(404);
+
+        if (req.accepts('html')) {
+            renderTemplate(res, req, "404.ejs")
+            return;
+        }
+
+        if (req.accepts('json')) {
+            res.send({ error: 'Not found' });
+            return;
+        }
+
+        res.type('txt').send('Not found');
+    });
+
+    const port = process.env.PORT;
     client.site = dashboard.listen(port);
     console.log(`Serveur web démarré sur le port ${port}`);
 };

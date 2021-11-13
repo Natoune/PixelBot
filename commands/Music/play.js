@@ -1,61 +1,65 @@
 const { MESSAGES } = require('../../utils/constants');
 const { MessageEmbed } = require('discord.js');
+const { QueryType } = require('discord-player');
+// const ytdl = require('ytdl-core');
+// const ytSearch = require('yt-search');
 
 module.exports.run = async (client, message, args) => {
+    // return message.channel.send({ 
+    //     embeds: [
+    //         new MessageEmbed()
+    //         .setDescription(`Le module de musique est en **maintenance** !`)
+    //         .setColor("#e74c3c")
+    //     ]
+    // });
+
     const voiceChannel = message.member.voice.channel;
-    const q = args.join(' ');
+    if (!voiceChannel) return message.channel.send({ 
+        embeds: [
+            new MessageEmbed()
+            .setDescription(`Vous devez rejoindre un salon vocal avant de faire cette commande !`)
+            .setColor("#e74c3c")
+        ]
+    });
 
-    const embed = new MessageEmbed()
-    .setAuthor(message.author.username, message.author.displayAvatarURL())
-    .setDescription(`Résultats de la Recherche \`${q}\``)
+    const permissions = voiceChannel.permissionsFor(message.client.user);
+    if (!permissions.has('CONNECT') || !permissions.has('SPEAK')) return message.channel.send({ 
+        embeds: [
+            new MessageEmbed()
+            .setDescription(`Vous n'avez pas la permission de lancer de la musique dans ce salon !`)
+            .setColor("#e74c3c")
+        ]
+    });
 
-    if (voiceChannel) {
+    const res = await client.player.search(args[0], {
+        requestedBy: message.member,
+        searchEngine: QueryType.AUTO
+    });
 
-        const player = client.music.create({
-            guild: message.guild.id,
-            voiceChannel: voiceChannel.id,
-            textChannel: message.channel.id,
-        });
+    if (!res || !res.tracks.length) return message.channel.send({ 
+        embeds: [
+            new MessageEmbed()
+            .setDescription(`Aucun résultat trouvé pour la recherche ${args[0]} !`)
+            .setColor("#e74c3c")
+        ]
+    });
 
-        player.connect();
+    const queue = await client.player.createQueue(message.guild, {
+        metadata: message.channel
+    });
 
-        client.musicPlayer.set(message.guild.id, player);
-
-        try {
-            let trackNumber = 0;
-            const musicSearchResults = await client.music.search(q, message.author);
-            const tracks = await musicSearchResults.tracks.slice(0, 5);
-            tracks.map(r => embed.addField(`${++trackNumber} - ${r.title}`, r.uri));
-
-            message.channel.send({ embeds: [embed] });
-
-            const filter = m => (message.author.id === m.author.id) && (m.content >= 1 && m.content <= tracks.length);
-            console.log("DEBUG");
-            const userEntry = await message.channel.awaitMessages(filter, { max: 1, time: 5000, error:['time'] });
-            console.log(userEntry.first().content);
-
-            if (userEntry) {
-                const musicSelection = userEntry.first().content;
-                const getMusicPlayer = client.musicPlayer.get(message.guild.id);
-                const track = tracks[musicSelection-1];
-                await getMusicPlayer.queue.add(track);
-                if (!player.playing && !player.paused) {
-                    player.play();
-                }
-            }
-        } catch (e) {
-            console.log(e);
-            message.channel.send('Erreur !\nLe système de musique est en train de démarrer... Réessayez dans quelques secondes');
-        }
-    } else {
-        message.channel.send({ 
-            embeds: [
-                new MessageEmbed()
-                .setDescription(`Vous devez rejoindre un salon vocal avant de faire cette commande !`)
-                .setColor("#e74c3c")
-            ]
-        });
+    try {
+        if (!queue.connection) await queue.connect(message.member.voice.channel);
+    } catch {
+        await client.player.deleteQueue(message.guild.id);
+        return message.channel.send(`I can't join the voice channel ${message.author}... try again ? ❌`);
     }
+
+    await message.channel.send(`Loading your ${res.playlist ? 'playlist' : 'track'}... 🎧`);
+
+    res.playlist ? queue.addTracks(res.tracks) : queue.addTrack(res.tracks[0]);
+
+    if (!queue.playing) await queue.play();
 }
 
 module.exports.help = MESSAGES.COMMANDS.MUSIC.PLAY;
