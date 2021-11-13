@@ -17,7 +17,7 @@ module.exports.run = async (client, message, args, settings) => {
 
     embed.setColor('BLUE');
     embed.setThumbnail(message.guild.iconURL({ size: 2048, dynamic: true }));
-    embed.setAuthor(`File d'attente - ${message.guild.name} ${methods[queue.repeatMode]}`, client.user.displayAvatarURL({ size: 1024, dynamic: true }));
+    embed.setAuthor(`File d'attente - ${message.guild.name} ${methods[queue.repeatMode]}`);
 
     const tracks = queue.tracks.map((track, i) => `**${i + 1}** - ${track.title} | ${track.author}\n(demandé par: ${track.requestedBy.username})`);
 

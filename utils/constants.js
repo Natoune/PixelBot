@@ -174,6 +174,17 @@ const MESSAGES = {
             }
         },
         MUSIC: {
+            PAUSE: {
+                name: 'pause',
+                aliases: ['stop'],
+                category: 'music',
+                args: false,
+                guild_only: true,
+                permissions: false,
+                description: 'Mets en Pause la musique',
+                usage: 'pause',
+                usage_details: ''
+            },
             PLAY: {
                 name: 'play',
                 aliases: ['song'],
@@ -192,8 +203,19 @@ const MESSAGES = {
                 args: false,
                 guild_only: true,
                 permissions: false,
-                description: 'Affiche la file d\'attente actuelle des musiques 🎵',
+                description: 'Affiche la file d\'attente actuelle des musiques',
                 usage: 'queue',
+                usage_details: ''
+            },
+            RESUME: {
+                name: 'resume',
+                aliases: ['unpause'],
+                category: 'music',
+                args: false,
+                guild_only: true,
+                permissions: false,
+                description: 'Relance une musique en pause',
+                usage: 'resume',
                 usage_details: ''
             },
             SKIP: {
@@ -206,6 +228,17 @@ const MESSAGES = {
                 description: 'Passe une musique de la file d\'attente',
                 usage: 'skip',
                 usage_details: ''
+            },
+            VOLUME: {
+                name: 'volume',
+                aliases: ['gain'],
+                category: 'music',
+                args: false,
+                guild_only: true,
+                permissions: false,
+                description: 'Règle le volume du Bot',
+                usage: 'volume <Volume>',
+                usage_details: '<Volume> (requis): Nouveau volume, entre 1 et 100'
             }
         }
     }

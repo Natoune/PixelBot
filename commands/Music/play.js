@@ -37,7 +37,6 @@ module.exports.run = async (client, message, args, settings) => {
     }
 
     let results_embed = new MessageEmbed()
-        .setAuthor(message.author.username, message.author.displayAvatarURL())
         .setDescription(`Voici les 5 premiers résultats de recherche pour \`${query}\`\nChoisissez la musique à jouer en faisant \`${settings.prefix}choose <numéro>\``)
 
     const q = await yts(query);
