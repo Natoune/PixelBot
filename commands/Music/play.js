@@ -1,18 +1,8 @@
 const { MESSAGES } = require('../../utils/constants');
 const { MessageEmbed } = require('discord.js');
-const { QueryType } = require('discord-player');
-// const ytdl = require('ytdl-core');
-// const ytSearch = require('yt-search');
+const yts = require( 'yt-search' )
 
-module.exports.run = async (client, message, args) => {
-    // return message.channel.send({ 
-    //     embeds: [
-    //         new MessageEmbed()
-    //         .setDescription(`Le module de musique est en **maintenance** !`)
-    //         .setColor("#e74c3c")
-    //     ]
-    // });
-
+module.exports.run = async (client, message, args, settings) => {
     const voiceChannel = message.member.voice.channel;
     if (!voiceChannel) return message.channel.send({ 
         embeds: [
@@ -31,35 +21,69 @@ module.exports.run = async (client, message, args) => {
         ]
     });
 
-    const res = await client.player.search(args[0], {
-        requestedBy: message.member,
-        searchEngine: QueryType.AUTO
+    const query = args.join(' ');
+    let queue = client.player.getQueue(message.guild.id);
+    if (!queue) queue = client.player.createQueue(message.guild, {
+        metadata: {
+            channel: message.channel
+        }
     });
-
-    if (!res || !res.tracks.length) return message.channel.send({ 
-        embeds: [
-            new MessageEmbed()
-            .setDescription(`Aucun résultat trouvé pour la recherche ${args[0]} !`)
-            .setColor("#e74c3c")
-        ]
-    });
-
-    const queue = await client.player.createQueue(message.guild, {
-        metadata: message.channel
-    });
-
+    
     try {
-        if (!queue.connection) await queue.connect(message.member.voice.channel);
+        if (!queue.connection) await queue.connect(voiceChannel);
     } catch {
-        await client.player.deleteQueue(message.guild.id);
-        return message.channel.send(`I can't join the voice channel ${message.author}... try again ? ❌`);
+        queue.destroy();
+        return message.channel.send("Could not join your voice channel!");
     }
 
-    await message.channel.send(`Loading your ${res.playlist ? 'playlist' : 'track'}... 🎧`);
+    let results_embed = new MessageEmbed()
+        .setAuthor(message.author.username, message.author.displayAvatarURL())
+        .setDescription(`Voici les 5 premiers résultats de recherche pour \`${query}\`\nChoisissez la musique à jouer en faisant \`${settings.prefix}choose <numéro>\``)
 
-    res.playlist ? queue.addTracks(res.tracks) : queue.addTrack(res.tracks[0]);
+    const q = await yts(query);
+    const tracks = q['all'].slice(0, 5);
 
-    if (!queue.playing) await queue.play();
+    let trackNumber = 0;
+    await tracks.map(r => results_embed.addField(++trackNumber+" - "+r.title, r.url));
+    message.channel.send({ embeds: [results_embed] });
+
+    try {
+        const filter = m => (message.author.id === m.author.id) && (m.content.split(' ')[1] >= 1 && m.content.split(' ')[1] <= trackNumber) && m.content.startsWith(settings.prefix+'choose');
+        const userEntry = await message.channel.awaitMessages({
+            filter, max: 1, time: 20_000, errors: ['time']
+        });
+
+        if (userEntry) {
+            const entry = userEntry.first().content.split(' ')[1];
+            const track = await client.player.search(q['all'][entry-1]['url'], {
+                requestedBy: message.author
+            }).then(x => x.tracks[0]);
+            if (!track) return message.channel.send({ 
+                embeds: [
+                    new MessageEmbed()
+                    .setDescription(`Je ne peux pas lancer cette musique !`)
+                    .setColor("#e74c3c")
+                ]
+            });
+    
+            queue.play(track);
+            return message.channel.send({ 
+                embeds: [
+                    new MessageEmbed()
+                    .setDescription(`[${track['title']}](${track['url']}) a été ajouté à la file d'attente !`)
+                ]
+            });
+        }
+    } catch (e) {
+        console.log(e);
+        return message.channel.send({ 
+            embeds: [
+                new MessageEmbed()
+                .setDescription(`Aucune réponse ? Bien, je ne jouerais rien alors...`)
+                .setColor("#e74c3c")
+            ]
+        });
+    }
 }
 
 module.exports.help = MESSAGES.COMMANDS.MUSIC.PLAY;

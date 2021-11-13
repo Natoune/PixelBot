@@ -1,5 +1,5 @@
 const { Client, Intents, Collection } = require('discord.js');
-const { loadCommands, loadEvents } = require('./utils/loader');
+const { loadCommands, loadClientEvents, loadPlayerEvents } = require('./utils/loader');
 const client = new Client({
     intents: [
         Intents.FLAGS.GUILDS,
@@ -18,18 +18,13 @@ client.mongoose = require('./utils/mongoose');
 
 /* MUSIC PLAYER */
 const { Player } = require("discord-player");
-client.player = new Player(client, {
-    leaveOnEmpty: false,
-    ytdlOptions: {
-        quality: 'highestaudio',
-        highWaterMark: 1 << 25
-    }
-});
+client.player = new Player(client, {});
 
 /* Charger commandes / Events */
 console.log('\x1b[35mInitialisation des Commandes:\x1b[0m');
 loadCommands(client);
-loadEvents(client);
+loadClientEvents(client);
+loadPlayerEvents(client);
 console.log('\x1b[35m—————————————————————————————\x1b[0m')
 
 /* Mongoose */

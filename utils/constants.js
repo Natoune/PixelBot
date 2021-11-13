@@ -182,8 +182,30 @@ const MESSAGES = {
                 guild_only: true,
                 permissions: false,
                 description: 'Joue une musique dans un salon vocal 🎵',
-                usage: 'play [Musique]',
-                usage_details: '[Musique]: Nom de la musique a jouer'
+                usage: 'play <Musique>',
+                usage_details: '<Musique> (requis): Nom de la musique a jouer'
+            },
+            QUEUE: {
+                name: 'queue',
+                aliases: [],
+                category: 'music',
+                args: false,
+                guild_only: true,
+                permissions: false,
+                description: 'Affiche la file d\'attente actuelle des musiques 🎵',
+                usage: 'queue',
+                usage_details: ''
+            },
+            SKIP: {
+                name: 'skip',
+                aliases: ['sk'],
+                category: 'music',
+                args: false,
+                guild_only: true,
+                permissions: false,
+                description: 'Passe une musique de la file d\'attente',
+                usage: 'skip',
+                usage_details: ''
             }
         }
     }
