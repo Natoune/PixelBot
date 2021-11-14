@@ -12,12 +12,12 @@ Une fois que le Bot est invité sur votre serveur, vous pouvez configurer quelqu
 
 *   `?config prefix <NouveauPrefix>`
 
-    ``![](../.gitbook/assets/image.png)``
+    ![](../.gitbook/assets/image.png)
 
     Après `?config prefix`, entrez le préfix que vous souaithez utiliser. Les commandes devront ensuite obligatoirement commencer par le préfix choisi.
 *   `?config welcomMessage <NouveauMessage>`
 
-    ``![](<../.gitbook/assets/image (7).png>)``
+    ![](<../.gitbook/assets/image (7).png>)
 
     Après `?config welcomeMessage`, entrez le message que recevront en privé vos nouveaux utilisateurs à leur arrivé sur le serveur.
 
