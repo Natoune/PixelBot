@@ -23,5 +23,7 @@ Serveur Discord: <a href="https://discord.gg/QGzYa6xAY7" target="_blank">https:/
 Pour soutenir le projet:<br>
 <a href="https://buymeacoffee.com/Natoune" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-black.png" width=200></a>
 
+[![Discord Bots](https://top.gg/api/widget/860842611970932767.svg)](https://top.gg/bot/860842611970932767)
+
 #### Remarque
 Le code de PixelBot est libre, mais je vous demanderai de ne PAS re-publier le code sans me créditer.
